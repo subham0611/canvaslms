@@ -6,7 +6,8 @@ sudo add-apt-repository ppa:certbot/certbot -y
 sudo apt-get update
 sudo apt-get install certbot -y
 
-certbot certonly --webroot  -n --agrees-to --email subham.singhal@zemosolabs.com  -w /usr/src/app/public -d lms.z-apps.io
+chown -R docker:docker /usr/src/app/public
+certbot certonly --webroot  -n --agree-tos --email < email > -w /usr/src/app/public -d < domain name>
 
 if [ -d /etc/letsencrypt ]; then
     chown -R docker:docker /etc/letsencrypt
@@ -22,12 +23,12 @@ fi
 
 touch /etc/logrotate.d/canvas
 
-echo "/usr/src/app/log/*.log {
-        weekly
-        rotate 1
-        missingok
-        create 0644 docker docker
-        notifempty
+echo "/usr/src/app/log/*.log { \n
+        weekly \n
+        rotate 1 \n
+        missingok \n
+        create 0644 docker docker \n
+        notifempty \n
 }" >> /etc/logrotate.d/canvas 
 
 if [ -d /etc/letsencrypt/live ]; then
